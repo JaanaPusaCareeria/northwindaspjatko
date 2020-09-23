@@ -1,0 +1,18 @@
+﻿@using System.Globalization
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Northwind Demo App</h1>
+    <p class="lead">Tämä on Northwind-sovelluksen working demo</p>
+
+    @for (int i = 0; i < 10; i++)
+    {
+        <p>@i</p>
+    }
+
+    <p>Nyt on @DateTime.Now</p>
+    <p>Nyt on @DateTime.Now.ToString(new CultureInfo("en-US"))</p>
+</div>
+
