@@ -2,17 +2,25 @@
 @{
     ViewBag.Title = "Home Page";
 }
+    <link rel ="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+        
+    <div class="jumbotron">
+        <h1>Northwind Demo App</h1>
+        @*Bootstrap4/SVG-ikonit*@
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg"><img src="~/Icons/star-fill.svg" alt="ASP.NET" width="32" height="32" title="ASP.NET"> ASP.NET-sivut &raquo;</a></p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg"><img src="~/Icons/star-fill.svg" alt="ASP.NET" width="32" height="32" title="ASP.NET"></a></p>
+        <p><a href="https://asp.net"><img src="~/Icons/star-fill.svg" alt="ASP.NET" width="32" height="32" title="ASP.NET"></a></p>
+        @*FAS (Font Awesome) -ikonit*@
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg fas fa-car"> ASP.NET-sivut</a></p>
+        <p><a href="https://asp.net" class="fas fa-car" title="ASP.NET-sivut"></a></p>
+        <h1><p class="lead">Tämä on Northwind-sovelluksen working demo</p></h1>
 
-<div class="jumbotron">
-    <h1>Northwind Demo App</h1>
-    <p class="lead">Tämä on Northwind-sovelluksen working demo</p>
+        @for (int i = 0; i < 10; i++)
+        {
+            <p>@i</p>
+        }
 
-    @for (int i = 0; i < 10; i++)
-    {
-        <p>@i</p>
-    }
-
-    <p>Nyt on @DateTime.Now</p>
-    <p>Nyt on @DateTime.Now.ToString(new CultureInfo("en-US"))</p>
-</div>
+        <p>Nyt on @DateTime.Now</p>
+        <p>Nyt on @DateTime.Now.ToString(new CultureInfo("en-US"))</p>
+    </div>
 
