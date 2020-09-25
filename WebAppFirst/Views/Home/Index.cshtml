@@ -13,7 +13,30 @@
         @*FAS (Font Awesome) -ikonit*@
         <p><a href="https://asp.net" class="btn btn-primary btn-lg fas fa-car"> ASP.NET-sivut</a></p>
         <p><a href="https://asp.net" class="fas fa-car" title="ASP.NET-sivut"></a></p>
-        <h1><p class="lead">Tämä on Northwind-sovelluksen working demo</p></h1>
+        <h1>Tämä on Northwind-sovelluksen working demo</h1>
+
+        @*Modal-tyyppisen ikkunan avauspainike*@
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#LoginRuutu">Avaa Modal-ikkuna</button>
+
+        @*Modal-tyyppisen ikkunan koodiesimerkki*@
+        <div class="modal" id="LoginRuutu">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1>Kirjautuminen Northwind-järjestelmään</h1>
+                    </div>
+                    <div class="modal-body">
+                        <p>Tähän tulee Login-toiminto</p>
+                        <input id="Text1" type="text" />
+                        <input id="Password1" type="password" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Kirjaudu (ei toimi)</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Peruuta (footer)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         @for (int i = 0; i < 10; i++)
         {

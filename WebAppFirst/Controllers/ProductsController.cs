@@ -20,7 +20,7 @@ namespace WebAppFirst.Controllers
             {
                 northwindEntities db = new northwindEntities();
                 List<Products> model = db.Products.ToList();
-                db.Dispose();
+                //db.Dispose();
                 return View(model);
             }
         }
@@ -35,7 +35,7 @@ namespace WebAppFirst.Controllers
             {
                 northwindEntities db = new northwindEntities();
                 List<Products> model = db.Products.ToList();
-                db.Dispose();
+                //db.Dispose();
                 return View(model);
             }
         }

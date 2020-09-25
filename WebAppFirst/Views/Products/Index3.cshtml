@@ -1,0 +1,74 @@
+﻿@model IEnumerable<WebAppFirst.Models.Products>
+@{
+    ViewBag.Title = "Index";
+}
+@section scripts {
+<script type="text/javascript">
+    $(function () {
+        $(".showProductId").click(function () {
+            var productId = $(this).data("productid");
+            alert(productId);
+        });
+    });
+    $(function () {
+        $("#poistaTuote").click(function () {
+            var productId = $(this).data("productid");
+            alert(productId);
+        });
+    });
+
+</script>    
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<h2>Index</h2>
+<h4>Tuotteita @Model.Count() kappaletta</h4>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Tuote ID</th>
+            <th>Tuotteen nimi</th>
+            <th>A-hinta</th>
+            <th>Varastomäärä</th>
+            <th>Tilattu määrä</th>
+            <th>Kuvalinkki</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (WebAppFirst.Models.Products prod in Model)
+        {
+        <tr>
+            <td class="showProductId" data-ProductID="@prod.ProductID">@prod.ProductID</td>
+            <td>@prod.ProductName</td>
+            <td>@prod.UnitPrice</td>
+            <td>@prod.UnitsInStock</td>
+            <td>@prod.UnitsOnOrder</td>
+            <td>@prod.ImageLink</td>
+            <td><button class="btn btn-success fa fa-list" onclick='naytaValittuTuote("@prod.ProductName")'> Näytä</button></td>
+            <td><button class="btn btn-primary showProductId fas fa-edit" data-ProductID="@prod.ProductID"> Muokkaa</button></td>
+            <td><button class="btn btn-danger fa fa-trash" data-ProductID="@prod.ProductID" id="poistaTuote"> Poista</button></td>
+        </tr>
+        }
+    </tbody>
+</table>
+<script>
+    function naytaValittuTuote(tuoteID) {
+        alert(tuoteID);
+    }
+</script>
+<script>
+    const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+
+    const comparer = (idx, asc) => (a, b) => ((v1, v2) =>
+        v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+    )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
+
+    document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+        const table = th.closest('table');
+        const tbody = table.querySelector('tbody');
+        Array.from(tbody.querySelectorAll('tr'))
+            .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+            .forEach(tr => tbody.appendChild(tr));
+    })));
+</script>
+
+
