@@ -9,6 +9,16 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm("Index", "Products", FormMethod.Get))
+{
+    <div class="input-group">
+        <p class="px-1">@Html.Label("Find by name")</p>
+        <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form-control" })</p>
+        <p class="px-1"><input type="submit" value="Search" class="form-control" /></p>
+    </div>
+}
+
 <table class="table">
     <tr>
         <th>@Html.DisplayNameFor(model => model.ProductName)</th>
