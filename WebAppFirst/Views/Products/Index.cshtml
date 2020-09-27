@@ -1,5 +1,7 @@
-﻿@model IEnumerable<WebAppFirst.Models.Products>
-
+﻿@*@model IEnumerable<WebAppFirst.Models.Products>*@
+@model PagedList.IPagedList<WebAppFirst.Models.Products>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index uusi";
@@ -25,17 +27,16 @@
         @*Tämä actionlink kutsuu controllerin index-metodia, ja välittää sinne parametrina lajittelujärjestyksen, kontrolleri taas palauttaa lajittelujärjestyksen arvon mikä sillä hetkellä on*@
         <th>@Html.ActionLink("Tuotteen nimi", "Index", new { sortOrder = ViewBag.ProductNameSortParm })</th>
  @*<th>@Html.DisplayNameFor(model => model.ProductName)</th>*@
-        <th>@Html.DisplayNameFor(model => model.QuantityPerUnit)</th>
+        <th>Quantity Per Unit</th>
  @*<th>@Html.DisplayNameFor(model => model.UnitPrice)</th>*@
-        <th>@Html.ActionLink("A-hinta", "Index", new { sortOrder = ViewBag.UnitPriceSortParm })
-        </th>
-        <th>@Html.DisplayNameFor(model => model.UnitsInStock)</th>
-        <th>@Html.DisplayNameFor(model => model.UnitsOnOrder)</th>
-        <th>@Html.DisplayNameFor(model => model.ReorderLevel)</th>
-        <th>@Html.DisplayNameFor(model => model.Discontinued)</th>
-        <th>@Html.DisplayNameFor(model => model.ImageLink)</th>
-        <th>@Html.DisplayNameFor(model => model.Categories.CategoryName)</th>
-        <th>@Html.DisplayNameFor(model => model.Suppliers.CompanyName)</th>
+        <th>@Html.ActionLink("A-hinta", "Index", new { sortOrder = ViewBag.UnitPriceSortParm })</th>
+        <th>Units In Stock</th>
+        <th>Units On Order</th>
+        <th>Reorder-level</th>
+        <th>Discontinued</th>
+        <th>Imagelink</th>
+        <th>Categoryname)</th>
+        <th>Suppliers name)</th>
         <th></th>
     </tr>
 
@@ -61,4 +62,8 @@
 
 </table>
 
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1}))
 

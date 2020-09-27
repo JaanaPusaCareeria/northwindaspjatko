@@ -4,13 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebAppFirst.Models;
+using PagedList;
 
 namespace WebAppFirst.Controllers
 {
     public class ProductsController : Controller
     {
         // GET: Products
-        public ActionResult Index(string sortOrder, string currentFilter1, string searchString1)
+        public ActionResult Index(string sortOrder, string currentFilter1, string searchString1, int? page, int? pagesize)
         {
             //if (Session["UserName"] == null)
             //{
@@ -23,6 +24,17 @@ namespace WebAppFirst.Controllers
                 ViewBag.ProductNameSortParm = String.IsNullOrEmpty(sortOrder) ? "productname_desc" : "";
                 //Tämä tutkii samaa kuin yllä oleva UnitPricen kohdalta: eli saa arvoksi joko unitprice_desc tai UnitPrice, riippuen mitä siellä on
                 ViewBag.UnitPriceSortParm = sortOrder == "UnitPrice" ? "unitprice_desc" : "UnitPrice";
+
+                if (searchString1 != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString1 = currentFilter1;
+                }
+
+                //ViewBag.currentFilter1 = searchString1;
 
                 northwindEntities db = new northwindEntities();
 
@@ -53,10 +65,12 @@ namespace WebAppFirst.Controllers
                     break;
                 }
 
+                int pageSize = (pagesize ?? 10); //Tämä palauttaa sivukoon taikka jos pagesize on null, niin palauttaa koon 10 riviä per sivu
+                int pageNumber = (page ?? 1); //Tämä palauttaa sivunumeron tai jos page on null, niin palauttaa numeron yksi       
                 // Vanhat hakulauseet:
                 //List<Products> model = db.Products.ToList();
                 //db.Dispose();
-                return View(tuotteet);
+                return View(tuotteet.ToPagedList(pageNumber, pageSize));
             //}
         }
 
