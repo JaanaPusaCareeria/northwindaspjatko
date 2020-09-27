@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<WebAppFirst.Models.Products>
 
+
 @{
     ViewBag.Title = "Index uusi";
 }
@@ -21,9 +22,13 @@
 
 <table class="table">
     <tr>
-        <th>@Html.DisplayNameFor(model => model.ProductName)</th>
+        @*Tämä actionlink kutsuu controllerin index-metodia, ja välittää sinne parametrina lajittelujärjestyksen, kontrolleri taas palauttaa lajittelujärjestyksen arvon mikä sillä hetkellä on*@
+        <th>@Html.ActionLink("Tuotteen nimi", "Index", new { sortOrder = ViewBag.ProductNameSortParm })</th>
+ @*<th>@Html.DisplayNameFor(model => model.ProductName)</th>*@
         <th>@Html.DisplayNameFor(model => model.QuantityPerUnit)</th>
-        <th>@Html.DisplayNameFor(model => model.UnitPrice)</th>
+ @*<th>@Html.DisplayNameFor(model => model.UnitPrice)</th>*@
+        <th>@Html.ActionLink("A-hinta", "Index", new { sortOrder = ViewBag.UnitPriceSortParm })
+        </th>
         <th>@Html.DisplayNameFor(model => model.UnitsInStock)</th>
         <th>@Html.DisplayNameFor(model => model.UnitsOnOrder)</th>
         <th>@Html.DisplayNameFor(model => model.ReorderLevel)</th>
@@ -55,3 +60,5 @@
 }
 
 </table>
+
+
