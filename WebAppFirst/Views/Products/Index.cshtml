@@ -25,11 +25,11 @@
 <table class="table">
     <tr>
         @*Tämä actionlink kutsuu controllerin index-metodia, ja välittää sinne parametrina lajittelujärjestyksen, kontrolleri taas palauttaa lajittelujärjestyksen arvon mikä sillä hetkellä on*@
-        <th>@Html.ActionLink("Tuotteen nimi", "Index", new { sortOrder = ViewBag.ProductNameSortParm })</th>
+        <th>@Html.ActionLink("Tuotteen nimi", "Index", new { sortOrder = ViewBag.ProductNameSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
  @*<th>@Html.DisplayNameFor(model => model.ProductName)</th>*@
         <th>Quantity Per Unit</th>
  @*<th>@Html.DisplayNameFor(model => model.UnitPrice)</th>*@
-        <th>@Html.ActionLink("A-hinta", "Index", new { sortOrder = ViewBag.UnitPriceSortParm })</th>
+        <th>@Html.ActionLink("A-hinta", "Index", new { sortOrder = ViewBag.UnitPriceSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>Units In Stock</th>
         <th>Units On Order</th>
         <th>Reorder-level</th>

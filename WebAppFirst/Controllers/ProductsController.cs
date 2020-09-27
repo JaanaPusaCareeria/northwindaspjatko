@@ -34,7 +34,7 @@ namespace WebAppFirst.Controllers
                     searchString1 = currentFilter1;
                 }
 
-                //ViewBag.currentFilter1 = searchString1;
+                ViewBag.currentFilter1 = searchString1;
 
                 northwindEntities db = new northwindEntities();
 
@@ -45,24 +45,41 @@ namespace WebAppFirst.Controllers
                 // eli jos searchString ei ole tyhjä, sitten tehdään rajaus Where tuotteen nimi sisältää käyttäjän antaman tekstin (searchString1). Sisältää kaikki, joissa kirjoitettu sisältyy koska "contains"
                 if (!String.IsNullOrEmpty(searchString1))
                 {
-                    tuotteet = tuotteet.Where(p => p.ProductName.Contains(searchString1));
+                    switch (sortOrder) //Jos hakufiltteri on käytössä, nii käytetään sitä ja lisäksi lajitellaan tulokset
+                    {
+                        case "productname_desc":
+                            tuotteet = tuotteet.Where(p => p.ProductName.Contains(searchString1)).OrderByDescending(p => p.ProductName);
+                            break;
+                        case "UnitPrice":
+                            tuotteet = tuotteet.Where(p => p.ProductName.Contains(searchString1)).OrderBy(p => p.UnitPrice);
+                            break;
+                        case "unitprice_desc":
+                            tuotteet = tuotteet.Where(p => p.ProductName.Contains(searchString1)).OrderByDescending(p => p.UnitPrice);
+                            break;
+                        default:
+                            tuotteet = tuotteet.Where(p => p.ProductName.Contains(searchString1)).OrderBy(p => p.ProductName);
+                            break;
+                    }
+                //tuotteet = tuotteet.Where(p => p.ProductName.Contains(searchString1));
                 }
-
-                //switch-casella tutkitaan, mikä arvo sortOrderilla on
-                switch (sortOrder)
+                else //Tässä hakufiltteri ei ole käytössä, joten lajitellaan koko tulosjoukko ilman suodatuksia
                 {
-                case "productname_desc":
-                    tuotteet = tuotteet.OrderByDescending(p => p.ProductName);
-                    break;
-                case "UnitPrice":
-                    tuotteet = tuotteet.OrderBy(p => p.UnitPrice);
-                    break;
-                case "unitprice_desc":
-                    tuotteet = tuotteet.OrderByDescending(p => p.UnitPrice);
-                    break;
-                default:
-                    tuotteet = tuotteet.OrderBy(p => p.ProductName);
-                    break;
+                    //switch-casella tutkitaan, mikä arvo sortOrderilla on
+                    switch (sortOrder)
+                    {
+                        case "productname_desc":
+                            tuotteet = tuotteet.OrderByDescending(p => p.ProductName);
+                            break;
+                        case "UnitPrice":
+                            tuotteet = tuotteet.OrderBy(p => p.UnitPrice);
+                            break;
+                        case "unitprice_desc":
+                            tuotteet = tuotteet.OrderByDescending(p => p.UnitPrice);
+                            break;
+                        default:
+                            tuotteet = tuotteet.OrderBy(p => p.ProductName);
+                            break;
+                    }
                 }
 
                 int pageSize = (pagesize ?? 10); //Tämä palauttaa sivukoon taikka jos pagesize on null, niin palauttaa koon 10 riviä per sivu
