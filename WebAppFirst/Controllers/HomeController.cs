@@ -34,6 +34,7 @@ namespace WebAppFirst.Controllers
             {
                 ViewBag.LoginMessage = "Successful login";
                 ViewBag.LoggedStatus = "In";
+                ViewBag.LoginError = 0; //ei virhettä
                 Session["UserName"] = LoggedUser.UserName;
                 return RedirectToAction("Index", "Home"); //Määritellään, mihin onnistunut kirjautuminen johtaa: Home/Index
             }
@@ -41,8 +42,9 @@ namespace WebAppFirst.Controllers
             {
                 ViewBag.LoginMessage = "Login unsuccessful";
                 ViewBag.LoggedStatus = "Out";
+                ViewBag.LoginError = 1; //pakotetaan modal-ikkuna login uudelleen koska kirjautumisyritys on epäonnistunut
                 LoginModel.LoginErrorMessage = "Tuntematon käyttäjätunnus tai salasana";
-                return View("Login", LoginModel); //epäonnistuneen kirjautumisen jälkeen palataan Login-näkymään
+                return View("Index", LoginModel); //epäonnistuneen kirjautumisen jälkeen palataan index-näkymään
             }
         }
 

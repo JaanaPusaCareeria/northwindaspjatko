@@ -30,7 +30,7 @@
     <p class="px-1">@Html.Label("Find by name")</p>
     <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form-control" })</p>
     <p class="px-1">@Html.Label("Find by Product Category:")</p>
-    <p class="px-1">@Html.Hidden("ProductCategory", ViewBag.currentFilter1 as string, new { @id = "ProductCategory", @class = "form-control" })</p> @*piilotettu kenttä, jolla tehdään kontrollerihaku*@
+    <p class="px-1">@Html.Hidden("ProductCategory", ViewBag.currentProductCategory as string, new { @id = "ProductCategory", @class = "form-control" })</p> @*piilotettu kenttä, jolla tehdään kontrollerihaku*@
     <p class="px-1">@Html.DropDownList("CategoryID", null, htmlAttributes: new { @id = "singleSelectedCategoryID", @class = "form-control" })</p>
     <p class="px-1"><input type="submit" value="Search" class="form-control" /></p>
 </div>

@@ -1,49 +1,91 @@
 ﻿@using System.Globalization
+@model WebAppFirst.Models.Logins
 @{
     ViewBag.Title = "Home Page";
 }
-    <link rel ="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-        
-    <div class="jumbotron">
-        <h1>Northwind Demo App</h1>
-        @*Bootstrap4/SVG-ikonit*@
-        <p><a href="https://asp.net" class="btn btn-primary btn-lg"><img src="~/Icons/star-fill.svg" alt="ASP.NET" width="32" height="32" title="ASP.NET"> ASP.NET-sivut &raquo;</a></p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-lg"><img src="~/Icons/star-fill.svg" alt="ASP.NET" width="32" height="32" title="ASP.NET"></a></p>
-        <p><a href="https://asp.net"><img src="~/Icons/star-fill.svg" alt="ASP.NET" width="32" height="32" title="ASP.NET"></a></p>
-        @*FAS (Font Awesome) -ikonit*@
-        <p><a href="https://asp.net" class="btn btn-primary btn-lg fas fa-car"> ASP.NET-sivut</a></p>
-        <p><a href="https://asp.net" class="fas fa-car" title="ASP.NET-sivut"></a></p>
-        <h1>Tämä on Northwind-sovelluksen working demo</h1>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
-        @*Modal-tyyppisen ikkunan avauspainike*@
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#LoginRuutu">Avaa Modal-ikkuna</button>
+@*JQuery, joka suoritetaan aina, kun sivu latautuu*@
+@section scripts {
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            if (@ViewBag.LoginError == 1) {
+            $('#LoginRuutu').modal('show');
+            }
+        });
+     </script>
+}
 
-        @*Modal-tyyppisen ikkunan koodiesimerkki*@
-        <div class="modal" id="LoginRuutu">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1>Kirjautuminen Northwind-järjestelmään</h1>
-                    </div>
-                    <div class="modal-body">
-                        <p>Tähän tulee Login-toiminto</p>
-                        <input id="Text1" type="text" />
-                        <input id="Password1" type="password" />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Kirjaudu (ei toimi)</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Peruuta (footer)</button>
-                    </div>
+<div class="jumbotron">
+    <h1>Northwind Demo App</h1>
+    @*Bootstrap4/SVG-ikonit*@
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg"><img src="~/Icons/star-fill.svg" alt="ASP.NET" width="32" height="32" title="ASP.NET"> ASP.NET-sivut &raquo;</a></p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg"><img src="~/Icons/star-fill.svg" alt="ASP.NET" width="32" height="32" title="ASP.NET"></a></p>
+    <p><a href="https://asp.net"><img src="~/Icons/star-fill.svg" alt="ASP.NET" width="32" height="32" title="ASP.NET"></a></p>
+    @*FAS (Font Awesome) -ikonit*@
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg fas fa-car"> ASP.NET-sivut</a></p>
+    <p><a href="https://asp.net" class="fas fa-car" title="ASP.NET-sivut"></a></p>
+    <h1>Tämä on Northwind-sovelluksen working demo</h1>
+
+    @*Modal-tyyppisen ikkunan avauspainike*@
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#LoginRuutu">Avaa Modal-ikkuna</button>
+
+    @*Modal-tyyppisen ikkunan koodiesimerkki*@
+    <div class="modal" id="LoginRuutu">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1>Kirjautuminen Northwind-järjestelmään</h1>
+                </div>
+                <div class="modal-body">
+                    <p>Kirjaudu sisään</p>
+                    @using (Html.BeginForm("Authorize", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            <h4>Logins</h4>
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.LoginId)
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.PassWord, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.PassWord, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <label class="text-danger">
+                                @Html.DisplayFor(model => model.LoginErrorMessage)
+                            </label>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Log" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Kirjaudu (ei toimi)</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Peruuta (footer)</button>
                 </div>
             </div>
         </div>
-
-        @for (int i = 0; i < 10; i++)
-        {
-            <p>@i</p>
-        }
-
-        <p>Nyt on @DateTime.Now</p>
-        <p>Nyt on @DateTime.Now.ToString(new CultureInfo("en-US"))</p>
     </div>
+
+    @for (int i = 0; i < 10; i++)
+    {
+        <p>@i</p>
+    }
+
+    <p>Nyt on @DateTime.Now</p>
+    <p>Nyt on @DateTime.Now.ToString(new CultureInfo("en-US"))</p>
+</div>
 
