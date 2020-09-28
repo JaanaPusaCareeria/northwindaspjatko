@@ -1,12 +1,12 @@
 ﻿@model WebAppFirst.Models.Logins
-@{ 
+@{
     ViewBag.Title = "Login";
 }
 <h2>Login</h2>
-@using (Html.BeginForm("Authorize", "Home", FormMethod.Post)) 
+@using (Html.BeginForm("Authorize", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-   <div class="form-horizontal">
+    <div class="form-horizontal">
         <h4>Logins</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -25,9 +25,9 @@
                 @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "text-danger" })
             </div>
         </div>
-       <label class="text-danger">
-           @Html.DisplayFor(model => model.LoginErrorMessage)
-       </label>
+        <label class="text-danger">
+            @Html.DisplayFor(model => model.LoginErrorMessage)
+        </label>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Log" class="btn btn-success" />
