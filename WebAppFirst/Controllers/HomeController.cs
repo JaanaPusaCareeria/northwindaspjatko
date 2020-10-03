@@ -16,6 +16,7 @@ namespace WebAppFirst.Controllers
                 ViewBag.LoggedStatus = "Out";
             }
             else ViewBag.LoggedStatus = "In";
+            ViewBag.LoginError = 0; //ei virhettä
             return View();
         }
 

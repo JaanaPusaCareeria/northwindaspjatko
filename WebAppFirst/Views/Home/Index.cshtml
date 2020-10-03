@@ -35,16 +35,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1>Kirjautuminen Northwind-järjestelmään</h1>
+                    <h3>Kirjautuminen Northwind-järjestelmään</h3>
                 </div>
                 <div class="modal-body">
-                    <p>Kirjaudu sisään</p>
-                    @using (Html.BeginForm("Authorize", "Home", FormMethod.Post))
+                    @using (Html.BeginForm("Authorize", "Home", FormMethod.Post, new { id = "loginForm" }))
                     {
                         @Html.AntiForgeryToken()
                         <div class="form-horizontal">
-                            <h4>Logins</h4>
-                            <hr />
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             @Html.HiddenFor(model => model.LoginId)
                             <div class="form-group">
@@ -66,15 +63,18 @@
                             </label>
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Log" class="btn btn-success" />
                                 </div>
                             </div>
                         </div>
                     }
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Kirjaudu (ei toimi)</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Peruuta (footer)</button>
+                    <div>
+                    @*Formin lähettävä button, joka ei ole formin sisällä mutta viittaa formin id:hen*@
+                    <button type="submit" class="btn btn-primary" form="loginForm"><i class="fas fa-check"></i></button>
+                    @*Kontrollerin kutsu Url.Action komennolla, jotta peruuttaminen johtaa alkutilanteeseen*@
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-primary"><i class="fas fa-times"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
