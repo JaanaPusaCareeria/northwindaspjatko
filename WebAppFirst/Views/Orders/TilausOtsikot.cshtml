@@ -1,46 +1,25 @@
 ﻿@model IEnumerable<WebAppFirst.Models.Orders>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "TilausOtsikot";
 }
 
 @section scripts {
     <script type="text/javascript">
         $(function () {
-            $(".getOrderId").click(function () {
+            $(".showOrderClass").click(function () {
                 let orderId = $(this).data("orderid");
-                console.log("Klikkasit tilausnumeroa: " + orderId);
-                var url = "/Orders/_ModalEdit/?id=" + orderId;
-                console.log(url);
-
-                $("#orderEdit").append(" <b>Avataan tilauksen " + orderId + " muokkausikkuna... </b>");
-
-                var $detailDivEdit = $("#orderEdit");
-                $.get(url, function (data) {
-                    $detailDivEdit.replaceWith(data);
-                    $('#ModalOrderEdit').modal('show');
-                });
+                alert("Klikkasit tilausnumeroa: " + orderId);
             });
-        });
-
+        })
     </script>
     }
 
-
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-
-<h2>Index</h2>
+<h2>TilausOtsikot</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<p>
-    @Html.ActionLink("Order Summary", "Ordersummary")
-</p>
-
-<div id="orderEdit"></div>
-
 <table class="table">
     <tr>
         <th>@Html.DisplayNameFor(model => model.OrderID)</th>
@@ -61,8 +40,7 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td><button class="getOrderId fas fa-edit" data-orderid="@item.OrderID"></button></td>
+    <tr class="showOrderClass" data-orderid="@item.OrderID">
         <td>@Html.DisplayFor(modelItem => item.OrderID)</td>
         <td>@Html.DisplayFor(modelItem => item.OrderDate)</td>
         <td>@Html.DisplayFor(modelItem => item.RequiredDate)</td>

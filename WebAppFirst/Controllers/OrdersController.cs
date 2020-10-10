@@ -67,6 +67,8 @@ namespace WebAppFirst.Controllers
         } //End ActionResult Create-Bind
 
         // GET: Orders/Edit/5
+
+        //Alkuperäinen Edit, jota kutsutaan rivin LOPUSSA olevasta nappulasta
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -83,12 +85,7 @@ namespace WebAppFirst.Controllers
             ViewBag.ShipVia = new SelectList(db.Shippers, "ShipperID", "CompanyName", orders.ShipVia);
             return View(orders);
         } //End ActionResult Edit
-
-        // POST: Orders/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //Editin palautus-metodi, alkuperäisen
         public ActionResult Edit([Bind(Include = "OrderID,CustomerID,EmployeeID,OrderDate,RequiredDate,ShippedDate,ShipVia,Freight,ShipName,ShipAddress,ShipCity,ShipRegion,ShipPostalCode,ShipCountry")] Orders orders)
         {
             if (ModelState.IsValid)
@@ -102,6 +99,46 @@ namespace WebAppFirst.Controllers
             ViewBag.ShipVia = new SelectList(db.Shippers, "ShipperID", "CompanyName", orders.ShipVia);
             return View(orders);
         } //End ActionResult Edit Bind
+         
+        //_ModalEdit, jota kutsutaan rivin ALUSSA olevasta nappulasta. Se palauttaa partial viewn.
+        public ActionResult _ModalEdit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Orders orders = db.Orders.Find(id);
+            if (orders == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "CompanyName", orders.CustomerID);
+            ViewBag.EmployeeID = new SelectList(db.Employees, "EmployeeID", "LastName", orders.EmployeeID);
+            ViewBag.ShipVia = new SelectList(db.Shippers, "ShipperID", "CompanyName", orders.ShipVia);
+            return PartialView("_ModalEdit", orders);
+        } //End ActionResult 
+
+        //ModalEditin palautusmetodi
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _ModalEdit([Bind(Include = "OrderID,CustomerID,EmployeeID,OrderDate,RequiredDate,ShippedDate,ShipVia,Freight,ShipName,ShipAddress,ShipCity,ShipRegion,ShipPostalCode,ShipCountry")] Orders orders)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(orders).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "CompanyName", orders.CustomerID);
+            ViewBag.EmployeeID = new SelectList(db.Employees, "EmployeeID", "LastName", orders.EmployeeID);
+            ViewBag.ShipVia = new SelectList(db.Shippers, "ShipperID", "CompanyName", orders.ShipVia);
+            return PartialView("_ModalEdit", orders);
+        } //End ActionResult Edit Bind
+
+        // POST: Orders/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
 
         // GET: Orders/Delete/5
         public ActionResult Delete(int? id)
@@ -181,6 +218,12 @@ namespace WebAppFirst.Controllers
                                };
             return View(orderSummary);
         } //end Public ActionResult Ordersummary
+
+        public ActionResult TilausOtsikot()
+        {
+            var orders = db.Orders.Include(o => o.Customers).Include(o => o.Employees).Include(o => o.Shippers);
+            return View(orders.ToList());
+        } //end ActionResult Index
 
     } //end of Public class Controller
 } //end on namespace

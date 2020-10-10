@@ -1504,6 +1504,8 @@
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Orders\Ordersummary.cshtml" />
+    <Content Include="Views\Orders\TilausOtsikot.cshtml" />
+    <Content Include="Views\Orders\_ModalEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
