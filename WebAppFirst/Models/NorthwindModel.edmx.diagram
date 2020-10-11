@@ -32,6 +32,24 @@
         <AssociationConnector Association="northwindModel.FK_Territories_Region" ManuallyRouted="false" />
         <AssociationConnector Association="northwindModel.CustomerCustomerDemo" ManuallyRouted="false" />
         <AssociationConnector Association="northwindModel.EmployeeTerritories" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="northwindModel.Alphabetical_list_of_products" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="northwindModel.Category_Sales_for_1997" Width="1.5" PointX="10.375" PointY="4.75" />
+        <EntityTypeShape EntityType="northwindModel.Current_Product_List" Width="1.5" PointX="10.375" PointY="7.75" />
+        <EntityTypeShape EntityType="northwindModel.Customer_and_Suppliers_by_City" Width="1.5" PointX="10.375" PointY="10.75" />
+        <EntityTypeShape EntityType="northwindModel.Invoices" Width="1.5" PointX="5.375" PointY="11.75" />
+        <EntityTypeShape EntityType="northwindModel.Order_Details_Extended" Width="1.5" PointX="7.375" PointY="11.75" />
+        <EntityTypeShape EntityType="northwindModel.Order_Subtotals" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="northwindModel.Orders_Qry" Width="1.5" PointX="12.375" PointY="3.75" />
+        <EntityTypeShape EntityType="northwindModel.Product_Sales_for_1997" Width="1.5" PointX="12.375" PointY="9.75" />
+        <EntityTypeShape EntityType="northwindModel.Products_Above_Average_Price" Width="1.5" PointX="12.375" PointY="12.75" />
+        <EntityTypeShape EntityType="northwindModel.Products_by_Category" Width="1.5" PointX="9.375" PointY="13.75" />
+        <EntityTypeShape EntityType="northwindModel.ProductsDailySales" Width="1.5" PointX="14.375" PointY="0.75" />
+        <EntityTypeShape EntityType="northwindModel.Sales_by_Category" Width="1.5" PointX="14.375" PointY="3.75" />
+        <EntityTypeShape EntityType="northwindModel.Sales_Totals_by_Amount" Width="1.5" PointX="14.375" PointY="6.75" />
+        <EntityTypeShape EntityType="northwindModel.Summary_of_Sales_by_Quarter" Width="1.5" PointX="14.375" PointY="9.75" />
+        <EntityTypeShape EntityType="northwindModel.Summary_of_Sales_by_Year" Width="1.5" PointX="14.375" PointY="12.75" />
+        <EntityTypeShape EntityType="northwindModel.Tilaussummat" Width="1.5" PointX="11.375" PointY="15.75" />
+        <EntityTypeShape EntityType="northwindModel.Tuotesummat" Width="1.5" PointX="13.375" PointY="15.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

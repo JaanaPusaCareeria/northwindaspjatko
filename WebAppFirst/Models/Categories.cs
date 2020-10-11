@@ -24,7 +24,7 @@ namespace WebAppFirst.Models
         public string CategoryName { get; set; }
         public string Description { get; set; }
         public byte[] Picture { get; set; }
-        //CategoryIDCategoryName-ominaisuus lisätty tuotekategorialla suodattamista ja dropdownin luomista varten
+        //CategoryIDCategoryName-ominaisuus lisätty tuotekategorialla suodattamista ja dropdownia varten
         public string CategoryIDCategoryName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
