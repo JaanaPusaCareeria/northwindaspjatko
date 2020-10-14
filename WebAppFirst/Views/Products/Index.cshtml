@@ -1,6 +1,7 @@
 ﻿@*@model IEnumerable<WebAppFirst.Models.Products>*@
 @model PagedList.IPagedList<WebAppFirst.Models.Products>
 @using PagedList.Mvc;
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -15,6 +16,67 @@
             var selValue = $("#singleSelectedCategoryID").val();
             document.getElementById("ProductCategory").value = selValue;
         });
+
+        $(function () {
+            $(".getProductName").click(function () {
+                let productName = $(this).data("productname");
+                drawLineChart(productName);
+            })
+        });
+
+        function drawLineChart(productName) {
+            let url = "/Products/_ProductSalesPerDate/?productName_" + productName;
+            var jsonData = $.ajax({
+                url: url,
+                dataType: 'json',
+            }).done(function (results) {
+                console.log(results)
+                var salesLabels = [], salesData = [];
+                for (let i = 0; i < results.length; i++) {
+                    salesData.push(results[i].DailySales);
+                    salesLabels.push(results[i].OrderDate);
+                }
+                renderChart(salesData, salesLabels, productName);
+            });
+        }
+
+        function renderChart(dataValues, labelTexts, productName) {
+            var ctx = document.getElementById('barcanvas').getContext('2d');
+            var barcanvas = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labelTexts,
+                    datasets: [{
+                        label: 'Daily product sales for' + productName,
+                        data: dataValues,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                stepSize: 100
+                            }
+                        }]
+                    }
+                }
+            }); //kaavio loppuu
+            $('#ProductSalesPerDateModal').modal('show');
+        }
+
+
+        
+
+
+
     </script>
 }
 
@@ -38,6 +100,7 @@
 
 <table class="table">
     <tr>
+        <th></th>
         @*Tämä actionlink kutsuu controllerin index-metodia, ja välittää sinne parametrina lajittelujärjestyksen, kontrolleri taas palauttaa lajittelujärjestyksen arvon mikä sillä hetkellä on*@
         <th>@Html.ActionLink("Tuotteen nimi", "Index", new { sortOrder = ViewBag.ProductNameSortParm, currentFilter1 = ViewBag.currentFilter1, currentProductCategory = ViewBag.currentProductCategory })</th>
         @*<th>@Html.DisplayNameFor(model => model.ProductName)</th>*@
@@ -57,6 +120,7 @@
     @foreach (var item in Model)
     {
         <tr>
+            <td><button class="btn-dark getProductName fas fa-chart-bar" style="border-radius: 4px;" data-productname="@item.ProductName"></button></td>
             <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
             <td>@Html.DisplayFor(modelItem => item.QuantityPerUnit)</td>
             <td>@Html.DisplayFor(modelItem => item.UnitPrice)</td>
@@ -82,3 +146,6 @@
 
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1, currentProductCategory = ViewBag.currentProductCategory }))
 
+@{ 
+    Html.RenderPartial("_ProductSalesPerDate");
+}

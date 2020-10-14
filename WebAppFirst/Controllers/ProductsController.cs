@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using WebAppFirst.Models;
 using PagedList;
+using WebAppFirst.ViewModels;
+using System.Data.Entity.SqlServer;
 
 namespace WebAppFirst.Controllers
 {
@@ -161,6 +163,26 @@ namespace WebAppFirst.Controllers
                 //db.Dispose();
                 return View(model);
             }
+        }
+
+        public ActionResult _ProductSalesPerDate(string productName)
+        {
+            if (String.IsNullOrEmpty(productName)) productName = "Lakkalikööri";
+
+            List<DailyProductSales> dailyproductsalesList = new List<DailyProductSales>();
+            northwindEntities db = new northwindEntities();
+
+            var orderSummary = from pds in db.ProductsDailySales
+                               where pds.ProductName == productName
+                               orderby pds.OrderDate
+                               select new DailyProductSales
+                               {
+                                   OrderDate = SqlFunctions.DateName("year", pds.OrderDate) + "." + SqlFunctions.DateName("MM", pds.OrderDate) + "." + SqlFunctions.DateName("day", pds.OrderDate),
+                                   DailySales = (float)pds.DailySales,
+                                   ProductName = pds.ProductName
+                               };
+
+            return Json(orderSummary, JsonRequestBehavior.AllowGet);
         }
     }
 }
